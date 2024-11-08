@@ -1,0 +1,30 @@
+#gameWindow {
+    background-color: red;
+    margin: 0 auto;
+}
+
+#puff {
+    z-index: -1;
+}
+
+#carWrapper {
+    /*border: 1px solid red; /* DEBUG */ 
+}
+
+/**
+ANIMATIONS
+**/
+
+@keyframes squeeze {
+    0% {
+        transform: scaleX(65%);
+    }
+
+    50% {
+        transform: scaleX(100%);
+    }
+
+    100% {
+        transform: scaleX(135%);
+    }
+}
