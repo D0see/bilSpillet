@@ -10,12 +10,11 @@ puff.style.position = "relative";
 puff.style.right = "50px";
 puff.style.bottom = "45px";
 
-puff.style.opacity = "0";
-puff.hidden = true;
+puff.isHidden = true;
 
 puff.style.zIndex = "-1";
 //Sprite
-puff.style.backgroundImage = "url(./puff.png)";
+puff.style.backgroundImage = "";
 
 //Transition 
 

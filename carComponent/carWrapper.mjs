@@ -1,6 +1,7 @@
-import puff from "./puff.mjs"
-import car from "./car.mjs"
+import puff from "./puff.mjs";
+import car from "./car.mjs";
 import headlightFactory from "./headlightFactory.mjs";
+import skidmarkFactory from "./skidmarksFactory.mjs";
 
 //_______________________________ Intialization
 const carWrapper = document.createElement('div');
@@ -18,7 +19,7 @@ carWrapper.appendChild(rightHeadlight);
 const MAXSPEED = 10; // px / 32ms
 
 //_______________________________ Style 
-carWrapper.style.position = "relative";
+carWrapper.style.position = "absolute";
 carWrapper.style.zIndex = "10";
 carWrapper.height = 94; //voiture.png height
 carWrapper.width = 200; //voiture.png width
@@ -26,9 +27,9 @@ carWrapper.style.height = carWrapper.height + 'px';
 carWrapper.style.width = carWrapper.width + 'px';
 
 //_______________________________ Position
-carWrapper.posY = 0;
-carWrapper.posX = 0;
-carWrapper.vel = 0;
+carWrapper.posY = 450;
+carWrapper.posX = 250;
+carWrapper.vel = 0; // in px / 32ms
 carWrapper.setNewCoord = function() {
     this.posY += carWrapper.orientation[1] * this.vel;
     this.posX += carWrapper.orientation[0] * this.vel;
@@ -40,8 +41,8 @@ carWrapper.updatePosition = function() {
 }
 
 //_______________________________ Handles oriention
-
 const NUMOFDIRECTIONS = 32;
+carWrapper.orientation = 0;
 carWrapper.orientationsIndex = 0;
 // [[x, y],...] 16 directions starting at 0,1 (up) going clockwise
 carWrapper.orientationsArray = [];
@@ -68,25 +69,26 @@ carWrapper.changeOrientation = function(val) {
 }
 
 //_______________________________ handles animations
-
 carWrapper.setSpriteOrientation = function(val) {
-    carWrapper.style.transform = `rotate(${this.orientationsIndex*Math.round(360/NUMOFDIRECTIONS)}deg)`
+    carWrapper.style.transform = `rotate(${this.orientationsIndex*Math.round(360/NUMOFDIRECTIONS)}deg)`;
 }
     //handles puff of smoke
 carWrapper.puffHandler = function() {
     if (this.vel > 3) {
-        if (puff.hidden) {
-            puff.style.opacity = "1";
-            puff.style.animation = "0.5s linear squeeze infinite"
-            puff.hidden = false;
+        if (puff.isHidden) {
+            puff.style.backgroundImage = "url(carComponent/puff.png)";
+            puff.style.animation = "0.5s linear squeeze infinite";
+            puff.isHidden = false;
         }
     } else {
-        if (!puff.hidden) {
-            puff.style.opacity = "0";
-            puff.hidden = true;
+        if (!puff.isHidden) {
+            puff.style.backgroundImage = "";
+            puff.style.animation = "";
+            puff.isHidden = true;
         }
     }
 }
+
     //handles headlights
 carWrapper.headlightHandler = function() {
     headLights.forEach(headlight => headlight.style.opacity === '1' ? 
@@ -94,9 +96,20 @@ carWrapper.headlightHandler = function() {
                                     headlight.style.opacity = '1');
 }
 
+    //handles skidmarks 
+carWrapper.skidMarkHandler = function () {
+    skidmarkFactory(this.posX, this.posY, this.style.transform, this.orientationsIndex);
+    console.log("carWrapper.posX", carWrapper.posX);
+    console.log("carWrapper.getBoundingClientRect().left", carWrapper.getBoundingClientRect().left);
+}
+
+
+    //handles animations
 carWrapper.animationsHandler = function() {
     carWrapper.puffHandler();
 }
+
+
 
 //_______________________________ input Handler 
 
@@ -122,6 +135,7 @@ carWrapper.keydownHandler = function(keyPressed) {
                 break;
             case ' ' :
                 carWrapper.vel = Math.max(Math.round(carWrapper.vel /1.05 - 0.6), 0);
+                carWrapper.skidMarkHandler();
                 break;
             case 'h' :
                 carWrapper.headlightHandler();

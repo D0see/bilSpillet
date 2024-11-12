@@ -10,7 +10,7 @@ car.style.width = car.width + 'px';
 
 car.style.zIndex = "1";
 //Sprite
-car.style.backgroundImage = 'url(./voiture.png)';
+car.style.backgroundImage = 'url(carComponent/voiture.png)';
 
 //Transition 
 

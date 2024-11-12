@@ -1,4 +1,4 @@
-import carWrapper from "./carWrapper.mjs";
+import carWrapper from "./carComponent/carWrapper.mjs";
 
 //Game Logic
 const gameWindow = document.getElementById('gameWindow');
@@ -13,12 +13,10 @@ const keyPressed = {};
 document.addEventListener('keydown', () => {
     event.preventDefault();
     keyPressed[event.key] = true;
-    console.log(keyPressed) 
 })
 document.addEventListener('keyup', () => {
     event.preventDefault();
     keyPressed[event.key] = false;
-    console.log(keyPressed) 
 })
 
 //Updates
