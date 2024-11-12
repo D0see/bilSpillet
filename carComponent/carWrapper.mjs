@@ -2,18 +2,23 @@ import puff from "./puff.mjs";
 import car from "./car.mjs";
 import headlightFactory from "./headlightFactory.mjs";
 import skidmarkFactory from "./skidmarksFactory.mjs";
-
+import driftSparkFactory from "./driftSparkFactory.mjs";
 //_______________________________ Intialization
 const carWrapper = document.createElement('div');
 carWrapper.id = 'carWrapper';
 document.body.appendChild(carWrapper);
 carWrapper.appendChild(car);
 carWrapper.appendChild(puff);
+
 const leftHeadlight = headlightFactory("leftHeadlight", 213, -37);
 const rightHeadlight = headlightFactory("rightHeadlight", 218, 6);
-const headLights = [leftHeadlight, rightHeadlight];
 carWrapper.appendChild(leftHeadlight);
 carWrapper.appendChild(rightHeadlight);
+const headLights = [leftHeadlight, rightHeadlight];
+
+const leftSpark = driftSparkFactory(1, 2);
+carWrapper.appendChild(leftSpark);
+
 
 //_______________________________ CONSTANTES 
 const MAXSPEED = 12; // px / 32ms
@@ -65,7 +70,6 @@ carWrapper.changeOrientation = function(val) {
         this.orientationsIndex = this.orientationsArray.length + nextOrientationIndex;
     } else {this.orientationsIndex = nextOrientationIndex;}
     this.setOrientation();
-    //integration tests
     this.setSpriteOrientation(nextOrientationIndex);
 }
 
@@ -107,14 +111,12 @@ carWrapper.skidMarkHandler = function () {
     }
 }
 
-
     //handles animations
 carWrapper.animationsHandler = function() {
     carWrapper.puffHandler();
 }
 
 //_______________________________ input Handler 
-
 carWrapper.keydownHandler = function(keyPressed) {
     for (const key of Object.keys(keyPressed)) {
         if (!keyPressed[key]) {continue;}
