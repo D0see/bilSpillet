@@ -1,12 +1,7 @@
 import carWrapper from "./carComponent/carWrapper.mjs";
 
 //Game Logic
-const gameWindow = document.getElementById('gameWindow');
-gameWindow.appendChild(carWrapper);
-gameWindow.height = 600;
-gameWindow.width = 400;
-gameWindow.style.height = gameWindow.height + 'px';
-gameWindow.style.width = gameWindow.width + 'px';
+document.body.appendChild(carWrapper);
 
 // Input handling
 const keyPressed = {};

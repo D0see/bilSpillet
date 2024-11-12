@@ -16,7 +16,8 @@ carWrapper.appendChild(leftHeadlight);
 carWrapper.appendChild(rightHeadlight);
 
 //_______________________________ CONSTANTES 
-const MAXSPEED = 10; // px / 32ms
+const MAXSPEED = 12; // px / 32ms
+const MAXSKIDMARKS = 50;
 
 //_______________________________ Style 
 carWrapper.style.position = "absolute";
@@ -97,10 +98,13 @@ carWrapper.headlightHandler = function() {
 }
 
     //handles skidmarks 
+const skidMarks = [];
 carWrapper.skidMarkHandler = function () {
-    skidmarkFactory(this.posX, this.posY, this.style.transform, this.orientationsIndex);
-    console.log("carWrapper.posX", carWrapper.posX);
-    console.log("carWrapper.getBoundingClientRect().left", carWrapper.getBoundingClientRect().left);
+    skidMarks.push(skidmarkFactory(this.posX, this.posY, this.style.transform, this.orientationsIndex));
+    // FIFO implementation
+    if (skidMarks.length > MAXSKIDMARKS) { 
+        skidMarks.shift().remove();
+    }
 }
 
 
@@ -108,8 +112,6 @@ carWrapper.skidMarkHandler = function () {
 carWrapper.animationsHandler = function() {
     carWrapper.puffHandler();
 }
-
-
 
 //_______________________________ input Handler 
 
@@ -134,7 +136,7 @@ carWrapper.keydownHandler = function(keyPressed) {
                 if (carWrapper.vel !== 0) {carWrapper.changeOrientation(1)};
                 break;
             case ' ' :
-                carWrapper.vel = Math.max(Math.round(carWrapper.vel /1.05 - 0.6), 0);
+                carWrapper.vel = Math.max(Math.round(carWrapper.vel /1.15 - 0.6), 0);
                 carWrapper.skidMarkHandler();
                 break;
             case 'h' :

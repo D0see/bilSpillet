@@ -10,8 +10,8 @@ const skidmarkFactory = (posX, posY, rotation, orientationsIndex) => {
 
     //Style
     const rect = skidmark.getBoundingClientRect();
-    skidmark.height = 94; 
-    skidmark.width = 200; 
+    skidmark.height = 94; //voiture.png height
+    skidmark.width = 200; //voiture.png width 
     skidmark.style.position = "absolute";
     skidmark.style.height = skidmark.height + 'px';
     skidmark.style.width = skidmark.width + 'px';
@@ -21,8 +21,6 @@ const skidmarkFactory = (posX, posY, rotation, orientationsIndex) => {
     skidmark.style.zIndex = "0";
 
     skidmark.style.transform = `rotate(${parseInt(getRotation(rotation))}deg)`;
-    console.log(skidmark.style.transform);
-    console.log(getRotation(rotation));
     //Graphics
     skidmark.style.backgroundImage = 'url(carComponent/skidMarks.png)';
     skidmark.style.opacity = '0.6';
