@@ -17,7 +17,7 @@ carWrapper.appendChild(leftHeadlight);
 carWrapper.appendChild(rightHeadlight);
 const headLights = [leftHeadlight, rightHeadlight];
 
-const leftSpark = driftSparkFactory(172 , false, 2);
+const leftSpark = driftSparkFactory(168 , false, 2);
 const rightSpark = driftSparkFactory(105, true, 0);
 carWrapper.appendChild(leftSpark);
 carWrapper.appendChild(rightSpark); 
