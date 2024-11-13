@@ -4,7 +4,7 @@ import carWrapper from "./carComponent/carWrapper.mjs";
 document.body.appendChild(carWrapper);
 
 // Input handling
-const keyPressed = {};
+export const keyPressed = {};
 document.addEventListener('keydown', () => {
     event.preventDefault();
     keyPressed[event.key] = true;

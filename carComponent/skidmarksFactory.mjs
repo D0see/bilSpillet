@@ -9,7 +9,6 @@ const skidmarkFactory = (posX, posY, rotation, orientationsIndex) => {
     document.body.appendChild(skidmark);
 
     //Style
-    const rect = skidmark.getBoundingClientRect();
     skidmark.height = 94; //voiture.png height
     skidmark.width = 200; //voiture.png width 
     skidmark.style.position = "absolute";

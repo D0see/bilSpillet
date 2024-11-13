@@ -3,6 +3,7 @@ import car from "./car.mjs";
 import headlightFactory from "./headlightFactory.mjs";
 import skidmarkFactory from "./skidmarksFactory.mjs";
 import driftSparkFactory from "./driftSparkFactory.mjs";
+import {keyPressed} from "../main.mjs";
 //_______________________________ Intialization
 const carWrapper = document.createElement('div');
 carWrapper.id = 'carWrapper';
@@ -16,9 +17,11 @@ carWrapper.appendChild(leftHeadlight);
 carWrapper.appendChild(rightHeadlight);
 const headLights = [leftHeadlight, rightHeadlight];
 
-const leftSpark = driftSparkFactory(1, 2);
+const leftSpark = driftSparkFactory(172 , false, 2);
+const rightSpark = driftSparkFactory(105, true, 0);
 carWrapper.appendChild(leftSpark);
-
+carWrapper.appendChild(rightSpark); 
+const driftSparks = [leftSpark, rightSpark];
 
 //_______________________________ CONSTANTES 
 const MAXSPEED = 12; // px / 32ms
@@ -101,6 +104,18 @@ carWrapper.headlightHandler = function() {
                                     headlight.style.opacity = '1');
 }
 
+    //handles driftSparks
+carWrapper.driftSparksHandler = function() {
+    driftSparks.forEach(spark => {
+        console.log("spark");
+        if (keyPressed[" "] && this.vel > 4) {
+            spark.style.opacity = '1';
+        } else {
+            spark.style.opacity = '0';
+        } 
+    });
+}
+
     //handles skidmarks 
 const skidMarks = [];
 carWrapper.skidMarkHandler = function () {
@@ -114,6 +129,7 @@ carWrapper.skidMarkHandler = function () {
     //handles animations
 carWrapper.animationsHandler = function() {
     carWrapper.puffHandler();
+    carWrapper.driftSparksHandler();
 }
 
 //_______________________________ input Handler 
