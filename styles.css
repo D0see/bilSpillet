@@ -4,15 +4,15 @@
 }
 
 #puff {
-    border: 1px solid red !important; /* DEBUG */ 
+    /* border: 1px solid red !important; /* DEBUG */ 
 }
 
 #carWrapper {
-    border: 1px solid red; /* DEBUG */ 
+    /* border: 1px solid red; /* DEBUG */ 
 }
 
 #driftSpark {
-    border: 1px solid red; /* DEBUG */ 
+    /* border: 1px solid red; /* DEBUG */ 
 }
 
 /**
@@ -30,5 +30,14 @@ ANIMATIONS
 
     100% {
         transform: scaleX(135%);
+    }
+}
+
+@keyframes spark-appears {
+    0% {
+        transform: scale(0%);
+    }
+    100% {
+        transform: scale(100%);
     }
 }

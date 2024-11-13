@@ -107,11 +107,12 @@ carWrapper.headlightHandler = function() {
     //handles driftSparks
 carWrapper.driftSparksHandler = function() {
     driftSparks.forEach(spark => {
-        console.log("spark");
-        if (keyPressed[" "] && this.vel > 4) {
+        if (keyPressed[" "] && this.vel > 3 && spark.style.opacity === "0") {
             spark.style.opacity = '1';
-        } else {
+            spark.style.animation = "0.10s linear spark-appears";
+        } else if (!keyPressed[" "] || this.vel <= 3) {
             spark.style.opacity = '0';
+            spark.style.animation = "";
         } 
     });
 }
@@ -160,7 +161,6 @@ carWrapper.keydownHandler = function(keyPressed) {
             case 'h' :
                 carWrapper.headlightHandler();
                 break;
-
         }
     }
 }
