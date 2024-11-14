@@ -154,7 +154,7 @@ carWrapper.keydownHandler = function(keyPressed) {
             case 'ArrowRight' :
                 if (carWrapper.vel !== 0) {carWrapper.changeOrientation(1)};
                 break;
-            case ' ' :
+            case 'f' : // used to be space but up-left-space js bug
                 carWrapper.vel = Math.max(Math.round(carWrapper.vel /1.15 - 0.6), 0);
                 carWrapper.skidMarkHandler();
                 break;
