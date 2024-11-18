@@ -94,7 +94,6 @@ carWrapper.updateHitbox = function () {
     } else if (nextOrientationIndex < 0){
         resultIndex = this.orientationsArray.length + nextOrientationIndex;
     } else {resultIndex = nextOrientationIndex;}
-    console.log("direction + 90° = ", this.orientationsArray[resultIndex]);
     const perpDirection = this.orientationsArray[resultIndex];
     //[topLeft, topRight, bottomRight, bottomLeft]
     carWrapper.hitboxPoints = 
@@ -106,11 +105,10 @@ carWrapper.updateHitbox = function () {
                         middleY + this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)],
                         [middleX - this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
                         middleY - this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)]];
-    console.log(this.posX, this.posY);
-    console.log(carWrapper.hitboxPoints);
 }
 carWrapper.updateHitbox();
 
+//DEBUG !!!
 carWrapper.printHitbox = function() {
     for (const point of this.hitboxPoints) {
         debugPointFactory(point[0], point[1], 'red');
@@ -194,7 +192,6 @@ carWrapper.keydownHandler = function(keyPressed) {
                 break;
             case 'ArrowLeft' :
                 if (carWrapper.vel !== 0) {carWrapper.changeOrientation(-1);}
-                //DEBUG
                 break;
             case 'ArrowRight' :
                 if (carWrapper.vel !== 0) {carWrapper.changeOrientation(1)};
@@ -207,6 +204,7 @@ carWrapper.keydownHandler = function(keyPressed) {
                 carWrapper.headlightHandler();
                 break;
             case 'd' : 
+                //DEBUG !!!
                 carWrapper.printHitbox();
                 break;
         }
