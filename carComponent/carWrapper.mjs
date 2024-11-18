@@ -3,6 +3,9 @@ import car from "./car.mjs";
 import headlightFactory from "./headlightFactory.mjs";
 import skidmarkFactory from "./skidmarksFactory.mjs";
 import driftSparkFactory from "./driftSparkFactory.mjs";
+
+import debugPointFactory from "./debugPointFactory.mjs";
+
 import {keyPressed} from "../main.mjs";
 //_______________________________ Intialization
 const carWrapper = document.createElement('div');
@@ -36,8 +39,10 @@ carWrapper.style.height = carWrapper.height + 'px';
 carWrapper.style.width = carWrapper.width + 'px';
 
 //_______________________________ Position
-carWrapper.posY = 450;
-carWrapper.posX = 250;
+carWrapper.area = carWrapper.height * carWrapper.width;
+    //position at topLeft of sprite
+carWrapper.posY = 0;
+carWrapper.posX = 0;
 carWrapper.vel = 0; // in px / 32ms
 carWrapper.setNewCoord = function() {
     this.posY += carWrapper.orientation[1] * this.vel;
@@ -50,14 +55,14 @@ carWrapper.updatePosition = function() {
 }
 
 //_______________________________ Handles oriention
-const NUMOFDIRECTIONS = 32;
+carWrapper.numOfDirections = 32;
 carWrapper.orientation = 0;
 carWrapper.orientationsIndex = 0;
 // [[x, y],...] 16 directions starting at 0,1 (up) going clockwise
 carWrapper.orientationsArray = [];
-const angleIncrement = 3600 / NUMOFDIRECTIONS;
-for (let i = 0; i < (3600 / angleIncrement); i++) {
-    const angle = i * (angleIncrement/10) * (Math.PI/180);
+carWrapper.angleIncrement = 3600 / carWrapper.numOfDirections;
+for (let i = 0; i < (3600 / carWrapper.angleIncrement); i++) {
+    const angle = i * (carWrapper.angleIncrement/10) * (Math.PI/180);
     carWrapper.orientationsArray.push([Math.cos(angle), Math.sin(angle)]);
 }
 carWrapper.orientation = carWrapper.orientationsArray[carWrapper.orientationsIndex];
@@ -76,9 +81,48 @@ carWrapper.changeOrientation = function(val) {
     this.setSpriteOrientation(nextOrientationIndex);
 }
 
+//_______________________________ handles hitbox
+    // ____ 
+carWrapper.updateHitbox = function () {
+    const middleX = this.posX + carWrapper.width / 2; 
+    const middleY = this.posY + carWrapper.height / 2;
+
+    let resultIndex;
+    const nextOrientationIndex = (this.orientationsIndex + this.numOfDirections/4);
+    if (nextOrientationIndex > (this.orientationsArray.length - 1)) {
+        resultIndex = (nextOrientationIndex % this.orientationsArray.length);
+    } else if (nextOrientationIndex < 0){
+        resultIndex = this.orientationsArray.length + nextOrientationIndex;
+    } else {resultIndex = nextOrientationIndex;}
+    console.log("direction + 90° = ", this.orientationsArray[resultIndex]);
+    const perpDirection = this.orientationsArray[resultIndex];
+    //[topLeft, topRight, bottomRight, bottomLeft]
+    carWrapper.hitboxPoints = 
+                        [[middleX - this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2),
+                        middleY - this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)], 
+                        [middleX + this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2),
+                        middleY + this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)],
+                        [middleX + this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
+                        middleY + this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)],
+                        [middleX - this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
+                        middleY - this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)]];
+    console.log(this.posX, this.posY);
+    console.log(carWrapper.hitboxPoints);
+}
+carWrapper.updateHitbox();
+
+carWrapper.printHitbox = function() {
+    for (const point of this.hitboxPoints) {
+        debugPointFactory(point[0], point[1], 'red');
+    }
+    debugPointFactory(this.posX, this.posY, 'green  ');
+    
+}
+
+
 //_______________________________ handles animations
 carWrapper.setSpriteOrientation = function(val) {
-    carWrapper.style.transform = `rotate(${this.orientationsIndex*Math.round(360/NUMOFDIRECTIONS)}deg)`;
+    carWrapper.style.transform = `rotate(${this.orientationsIndex*Math.round(360/carWrapper.numOfDirections)}deg)`;
 }
     //handles puff of smoke
 carWrapper.puffHandler = function() {
@@ -107,10 +151,10 @@ carWrapper.headlightHandler = function() {
     //handles driftSparks
 carWrapper.driftSparksHandler = function() {
     driftSparks.forEach(spark => {
-        if (keyPressed[" "] && this.vel > 3 && spark.style.opacity === "0") {
+        if (keyPressed["f"] && this.vel > 3 && spark.style.opacity === "0") {
             spark.style.opacity = '1';
             spark.style.animation = "0.10s linear spark-appears";
-        } else if (!keyPressed[" "] || this.vel <= 3) {
+        } else if (!keyPressed["f"] || this.vel <= 3) {
             spark.style.opacity = '0';
             spark.style.animation = "";
         } 
@@ -150,6 +194,7 @@ carWrapper.keydownHandler = function(keyPressed) {
                 break;
             case 'ArrowLeft' :
                 if (carWrapper.vel !== 0) {carWrapper.changeOrientation(-1);}
+                //DEBUG
                 break;
             case 'ArrowRight' :
                 if (carWrapper.vel !== 0) {carWrapper.changeOrientation(1)};
@@ -160,6 +205,9 @@ carWrapper.keydownHandler = function(keyPressed) {
                 break;
             case 'h' :
                 carWrapper.headlightHandler();
+                break;
+            case 'd' : 
+                carWrapper.printHitbox();
                 break;
         }
     }
