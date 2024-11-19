@@ -1,0 +1,100 @@
+import {keyPressed} from "../main.mjs";
+
+import rabbit from "./rabbit.mjs";
+
+
+const rabbitWrapper = document.createElement('div');
+rabbitWrapper.id = 'rabbitWrapper';
+document.body.appendChild(rabbitWrapper);
+rabbitWrapper.appendChild(rabbit);
+
+//_______________________________ CONSTANTES 
+const speed = 0; // px / 32ms
+
+//_______________________________ Style 
+rabbitWrapper.style.position = "absolute";
+rabbitWrapper.style.zIndex = "3";
+rabbitWrapper.height = 40; // placeholder
+rabbitWrapper.width = 40; // placeholder
+rabbitWrapper.style.height = rabbitWrapper.height + 'px';
+rabbitWrapper.style.width = rabbitWrapper.width + 'px';
+
+
+//_______________________________ Position
+rabbitWrapper.area = rabbitWrapper.height * rabbitWrapper.width;
+    //position at topLeft of sprite
+    rabbitWrapper.posY = 500;
+    rabbitWrapper.posX = 500;
+    rabbitWrapper.vel = 0; // in px / 32ms
+rabbitWrapper.setNewCoord = function() {
+    this.posY += rabbitWrapper.orientation[1] * speed;
+    this.posX += rabbitWrapper.orientation[0] * speed;
+}
+rabbitWrapper.updatePosition = function() {
+    this.setNewCoord();
+    this.style.left = this.posX + 'px';
+    this.style.top = this.posY + 'px';
+}
+
+//_______________________________ Handles oriention
+rabbitWrapper.numOfDirections = 8;
+rabbitWrapper.orientation = 0;
+rabbitWrapper.orientationsIndex = 0;
+// [[x, y],...] 16 directions starting at 0,1 (up) going clockwise
+rabbitWrapper.orientationsArray = [];
+rabbitWrapper.angleIncrement = 3600 / rabbitWrapper.numOfDirections;
+for (let i = 0; i < (3600 / rabbitWrapper.angleIncrement); i++) {
+    const angle = i * (rabbitWrapper.angleIncrement/10) * (Math.PI/180);
+    rabbitWrapper.orientationsArray.push([Math.cos(angle), Math.sin(angle)]);
+}
+rabbitWrapper.orientation = rabbitWrapper.orientationsArray[rabbitWrapper.orientationsIndex];
+rabbitWrapper.setOrientation = function() {
+    this.orientation = this.orientationsArray[this.orientationsIndex];
+}
+// turns the rabbitWrapper (val * angleIncrement/10 degrees)
+rabbitWrapper.changeOrientation = function(val) {
+    const nextOrientationIndex = (this.orientationsIndex + val);
+    if (nextOrientationIndex > (this.orientationsArray.length - 1)) {
+        this.orientationsIndex = (nextOrientationIndex % this.orientationsArray.length);
+    } else if (nextOrientationIndex < 0){
+        this.orientationsIndex = this.orientationsArray.length + nextOrientationIndex;
+    } else {this.orientationsIndex = nextOrientationIndex;}
+    this.setOrientation();
+    this.setSpriteOrientation(nextOrientationIndex);
+}
+
+//_______________________________ Handles hitbox
+rabbitWrapper.updateHitbox = function () {
+    const middleX = this.posX + rabbitWrapper.width / 2; 
+    const middleY = this.posY + rabbitWrapper.height / 2;
+
+    let resultIndex;
+    const nextOrientationIndex = (this.orientationsIndex + this.numOfDirections/4);
+    if (nextOrientationIndex > (this.orientationsArray.length - 1)) {
+        resultIndex = (nextOrientationIndex % this.orientationsArray.length);
+    } else if (nextOrientationIndex < 0){
+        resultIndex = this.orientationsArray.length + nextOrientationIndex;
+    } else {resultIndex = nextOrientationIndex;}
+    const perpDirection = this.orientationsArray[resultIndex];
+    console.log(this.orientationsArray);
+    console.log(perpDirection);
+    //[topLeft, topRight, bottomRight, bottomLeft]
+    rabbitWrapper.hitboxPoints = 
+                        [[middleX - this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2),
+                        middleY - this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)], 
+                        [middleX + this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2),
+                        middleY + this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)],
+                        [middleX + this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
+                        middleY + this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)],
+                        [middleX - this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
+                        middleY - this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)]];
+
+    this.hitboxSegments = [[this.hitboxPoints[0], this.hitboxPoints[this.hitboxPoints.length - 1]]];
+    for (let i = 1; i < this.hitboxPoints.length; i++) {
+        this.hitboxSegments.push([this.hitboxPoints[i - 1], this.hitboxPoints[i]]);
+    }
+}
+rabbitWrapper.hitboxSegments = [];
+rabbitWrapper.updateHitbox();
+
+export default rabbitWrapper;
