@@ -4,7 +4,7 @@ import headlightFactory from "./headlightFactory.mjs";
 import skidmarkFactory from "./skidmarksFactory.mjs";
 import driftSparkFactory from "./driftSparkFactory.mjs";
 
-import debugPointFactory from "./debugPointFactory.mjs";
+import debugPointFactory from "../utils/debugPointFactory.mjs";
 
 import {keyPressed} from "../main.mjs";
 //_______________________________ Intialization
@@ -82,7 +82,6 @@ carWrapper.changeOrientation = function(val) {
 }
 
 //_______________________________ handles hitbox
-    // ____ 
 carWrapper.updateHitbox = function () {
     const middleX = this.posX + carWrapper.width / 2; 
     const middleY = this.posY + carWrapper.height / 2;
@@ -105,8 +104,15 @@ carWrapper.updateHitbox = function () {
                         middleY + this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)],
                         [middleX - this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
                         middleY - this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)]];
+
+    this.hitboxSegments = [[this.hitboxPoints[0], this.hitboxPoints[this.hitboxPoints.length - 1]]];
+    for (let i = 1; i < this.hitboxPoints.length; i++) {
+        this.hitboxSegments.push([this.hitboxPoints[i - 1], this.hitboxPoints[i]]);
+    }
 }
+carWrapper.hitboxSegments = [];
 carWrapper.updateHitbox();
+
 
 //DEBUG !!!
 carWrapper.printHitbox = function() {
