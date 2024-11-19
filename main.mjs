@@ -23,17 +23,25 @@ document.addEventListener('keyup', () => {
 setInterval( () => {
     carWrapper.updatePosition();
     carWrapper.updateHitbox();
-    for (const  point of  rabbitWrapper.hitboxPoints) {
+    for (const point of rabbitWrapper.hitboxPoints) {
         if (collisionChecker(carWrapper, point)) {
             rabbitWrapper.firstChild.style.backgroundColor = 'red';
-            console.log("COLLISION with : ", point);
+            console.log("COLLISION with rabbit at : ", point);
+        }
+    }
+    for (const point of testPoints) {
+        if (collisionChecker(carWrapper, point)) {
+            console.log("COLLISION with point at : ", point);
         }
     }
     rabbitWrapper.updatePosition();
+    rabbitWrapper.updateHitbox();
 }, 16)
 
 setInterval( () => {
     carWrapper.keydownHandler(keyPressed);
     carWrapper.animationsHandler();
+    
+    rabbitWrapper.keydownHandler(keyPressed);
 }, 80)
 

@@ -9,7 +9,7 @@ document.body.appendChild(rabbitWrapper);
 rabbitWrapper.appendChild(rabbit);
 
 //_______________________________ CONSTANTES 
-const speed = 0; // px / 32ms
+rabbitWrapper.speed = 6; // px / 32ms
 
 //_______________________________ Style 
 rabbitWrapper.style.position = "absolute";
@@ -19,16 +19,15 @@ rabbitWrapper.width = 40; // placeholder
 rabbitWrapper.style.height = rabbitWrapper.height + 'px';
 rabbitWrapper.style.width = rabbitWrapper.width + 'px';
 
-
 //_______________________________ Position
 rabbitWrapper.area = rabbitWrapper.height * rabbitWrapper.width;
-    //position at topLeft of sprite
-    rabbitWrapper.posY = 500;
-    rabbitWrapper.posX = 500;
-    rabbitWrapper.vel = 0; // in px / 32ms
+//position at topLeft of sprite
+rabbitWrapper.posY = 500;
+rabbitWrapper.posX = 500;
+rabbitWrapper.vel = 0; // in px / 32ms
 rabbitWrapper.setNewCoord = function() {
-    this.posY += rabbitWrapper.orientation[1] * speed;
-    this.posX += rabbitWrapper.orientation[0] * speed;
+    this.posY += rabbitWrapper.orientation[1] * this.vel;
+    this.posX += rabbitWrapper.orientation[0] * this.vel;
 }
 rabbitWrapper.updatePosition = function() {
     this.setNewCoord();
@@ -52,16 +51,21 @@ rabbitWrapper.setOrientation = function() {
     this.orientation = this.orientationsArray[this.orientationsIndex];
 }
 // turns the rabbitWrapper (val * angleIncrement/10 degrees)
-rabbitWrapper.changeOrientation = function(val) {
+rabbitWrapper.changeOrientation = function(newIndex) {
+    this.orientationsIndex = newIndex;
+    /*
     const nextOrientationIndex = (this.orientationsIndex + val);
     if (nextOrientationIndex > (this.orientationsArray.length - 1)) {
         this.orientationsIndex = (nextOrientationIndex % this.orientationsArray.length);
     } else if (nextOrientationIndex < 0){
         this.orientationsIndex = this.orientationsArray.length + nextOrientationIndex;
     } else {this.orientationsIndex = nextOrientationIndex;}
+    */
     this.setOrientation();
-    this.setSpriteOrientation(nextOrientationIndex);
+    //this.setSpriteOrientation(nextOrientationIndex);
 }
+
+console.log(rabbitWrapper.orientationsArray);
 
 //_______________________________ Handles hitbox
 rabbitWrapper.updateHitbox = function () {
@@ -76,8 +80,6 @@ rabbitWrapper.updateHitbox = function () {
         resultIndex = this.orientationsArray.length + nextOrientationIndex;
     } else {resultIndex = nextOrientationIndex;}
     const perpDirection = this.orientationsArray[resultIndex];
-    console.log(this.orientationsArray);
-    console.log(perpDirection);
     //[topLeft, topRight, bottomRight, bottomLeft]
     rabbitWrapper.hitboxPoints = 
                         [[middleX - this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2),
@@ -96,5 +98,36 @@ rabbitWrapper.updateHitbox = function () {
 }
 rabbitWrapper.hitboxSegments = [];
 rabbitWrapper.updateHitbox();
+
+//___________________________________________ inputHandling
+rabbitWrapper.keydownHandler = function(keyPressed) {
+    for (const key of Object.keys(keyPressed)) {
+        if (!keyPressed[key]) {continue;}
+        switch (key) {
+            case '8' :
+                this.vel = 8;
+                rabbitWrapper.changeOrientation(6);
+                console.log(rabbitWrapper.orientationsArray[this.orientationsIndex]);
+                break;
+            case '2' :
+                this.vel = 8
+                rabbitWrapper.changeOrientation(2);
+                break;
+            case '4' :
+                this.vel = 8
+                rabbitWrapper.changeOrientation(4);
+                break;
+            case '6' :
+                this.vel = 8
+                rabbitWrapper.changeOrientation(0);
+                break;
+            case 'd' : 
+                //DEBUG !!!
+                //rabbitWrapper.printHitbox();
+                this.vel = 0;
+                break;
+        }
+    }
+}
 
 export default rabbitWrapper;
