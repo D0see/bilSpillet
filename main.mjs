@@ -25,6 +25,7 @@ setInterval( () => {
     carWrapper.updateHitbox();
     for (const point of rabbitWrapper.hitboxPoints) {
         if (collisionChecker(carWrapper, point)) {
+            rabbitWrapper.vel = 0;
             rabbitWrapper.firstChild.style.backgroundColor = 'red';
             console.log("COLLISION with rabbit at : ", point);
         }
