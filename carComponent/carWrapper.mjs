@@ -27,7 +27,7 @@ carWrapper.appendChild(rightSpark);
 const driftSparks = [leftSpark, rightSpark];
 
 //_______________________________ CONSTANTES 
-const MAXSPEED = 12; // px / 32ms
+const MAXSPEED = 9; // px / 32ms
 const MAXSKIDMARKS = 50;
 
 //_______________________________ Style 

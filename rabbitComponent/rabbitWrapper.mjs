@@ -9,7 +9,7 @@ document.body.appendChild(rabbitWrapper);
 rabbitWrapper.appendChild(rabbit);
 
 //_______________________________ CONSTANTES 
-rabbitWrapper.speed = 7; // px / 32ms
+rabbitWrapper.speed = 6; // px / 32ms
 
 //_______________________________ Style 
 rabbitWrapper.style.position = "absolute";
@@ -108,50 +108,59 @@ rabbitWrapper.stopsOnDirectionRelease = function (keyPressed) {
     if (!directionPressed) {this.vel = 0} 
 }
 
-rabbitWrapper.keydownHandler = function(keyPressed) {
+//used to keep tracks of the last inputtedKey
+rabbitWrapper.keyList = [];
+rabbitWrapper.updateInputKeyList = function (keyPressed) {
     for (const key of Object.keys(keyPressed)) {
-        if (!keyPressed[key]) {continue;}
-        switch (key) {
-            case '1' :
-                this.vel = rabbitWrapper.speed;
-                rabbitWrapper.changeOrientation(3);
-                break;
-            case '2' :
-                this.vel = rabbitWrapper.speed;
-                rabbitWrapper.changeOrientation(2);
-                break;
-            case '3' :
-                this.vel = rabbitWrapper.speed;
-                rabbitWrapper.changeOrientation(1);
-                break;
-            case '4' :
-                this.vel = rabbitWrapper.speed;
-                rabbitWrapper.changeOrientation(4);
-                break;
-            case '5' :
-                break;
-            case '6' :
-                this.vel = rabbitWrapper.speed;
-                rabbitWrapper.changeOrientation(0);
-                break;
-            case '7' :
-                this.vel = rabbitWrapper.speed;
-                rabbitWrapper.changeOrientation(5);
-                break;
-            case '8' :
-                this.vel = rabbitWrapper.speed;
-                rabbitWrapper.changeOrientation(6);
-                break;
-            case '9' :
-                this.vel = rabbitWrapper.speed;
-                rabbitWrapper.changeOrientation(7);
-                break;
-            case 'd' : 
-                //DEBUG !!!
-                //rabbitWrapper.printHitbox();
-                this.vel = 0;
-                break;
-        }
+        parseInt(key) && !keyPressed[key] && this.keyList.includes(key)? this.keyList.splice(this.keyList.indexOf(key), 1) : '';
+    }
+    for (const key of Object.keys(keyPressed)) {
+        parseInt(key) && keyPressed[key] && !this.keyList.includes(key)? this.keyList.unshift(key) : '';
+    }
+    console.log(this.keyList);
+}
+
+rabbitWrapper.keydownHandler = function() {
+    switch (this.keyList[0]) {
+        case '1' :
+            this.vel = rabbitWrapper.speed;
+            rabbitWrapper.changeOrientation(3);
+            break;
+        case '2' :
+            this.vel = rabbitWrapper.speed;
+            rabbitWrapper.changeOrientation(2);
+            break;
+        case '3' :
+            this.vel = rabbitWrapper.speed;
+            rabbitWrapper.changeOrientation(1);
+            break;
+        case '4' :
+            this.vel = rabbitWrapper.speed;
+            rabbitWrapper.changeOrientation(4);
+            break;
+        case '5' :
+            break;
+        case '6' :
+            this.vel = rabbitWrapper.speed;
+            rabbitWrapper.changeOrientation(0);
+            break;
+        case '7' :
+            this.vel = rabbitWrapper.speed;
+            rabbitWrapper.changeOrientation(5);
+            break;
+        case '8' :
+            this.vel = rabbitWrapper.speed;
+            rabbitWrapper.changeOrientation(6);
+            break;
+        case '9' :
+            this.vel = rabbitWrapper.speed;
+            rabbitWrapper.changeOrientation(7);
+            break;
+        case 'd' : 
+            //DEBUG !!!
+            //rabbitWrapper.printHitbox();
+            this.vel = 0;
+            break;
     }
 }
 

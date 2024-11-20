@@ -8,6 +8,8 @@ import collisionChecker from "./utils/collisionChecker.mjs";
 document.body.appendChild(carWrapper);
 document.body.appendChild(rabbitWrapper);
 
+
+console.log(document.getElementsByTagName("lapin"));
 // Input handling
 export const keyPressed = {};
 document.addEventListener('keydown', () => {
@@ -31,6 +33,7 @@ setInterval( () => {
         }
     }
     rabbitWrapper.keydownHandler(keyPressed);
+    rabbitWrapper.updateInputKeyList(keyPressed)
     rabbitWrapper.stopsOnDirectionRelease(keyPressed);
     rabbitWrapper.updatePosition();
     rabbitWrapper.updateHitbox();
