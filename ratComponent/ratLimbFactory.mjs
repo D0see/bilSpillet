@@ -12,7 +12,7 @@ const ratLimbFactory = (src, id) => {
     ratLimb.style.zIndex = "1";
 
     //Sprite
-    ratLimb.style.backgroundImage = `url(./rabbitComponent/${src})`;
+    ratLimb.style.backgroundImage = `url(./ratComponent/${src})`;
     return ratLimb;
 }
 

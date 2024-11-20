@@ -1,63 +1,63 @@
 import {keyPressed} from "../main.mjs";
 
-import rabbit from "./rabbit.mjs";
+import rat from "./rat.mjs";
 
 import ratLimbFactory from "./ratLimbFactory.mjs";
 
-const rabbitWrapper = document.createElement('div');
-rabbitWrapper.id = 'rabbitWrapper';
-document.body.appendChild(rabbitWrapper);
-rabbitWrapper.appendChild(rabbit);
+const ratWrapper = document.createElement('div');
+ratWrapper.id = 'ratWrapper';
+document.body.appendChild(ratWrapper);
+ratWrapper.appendChild(rat);
 const ratLimbUpLeft = ratLimbFactory("./ratLimbUpLeft.png", "ratLimbUpLeft")
-rabbitWrapper.appendChild(ratLimbUpLeft);
-rabbitWrapper.appendChild(ratLimbFactory("./ratLimbUpRight.png", "ratLimbUpRight"));
-rabbitWrapper.appendChild(ratLimbFactory("./ratLimbDownRight.png", "ratLimbDownRight"));
-rabbitWrapper.appendChild(ratLimbFactory("./ratLimbDownLeft.png", "ratLimbDownLeft"));
+ratWrapper.appendChild(ratLimbUpLeft);
+ratWrapper.appendChild(ratLimbFactory("./ratLimbUpRight.png", "ratLimbUpRight"));
+ratWrapper.appendChild(ratLimbFactory("./ratLimbDownRight.png", "ratLimbDownRight"));
+ratWrapper.appendChild(ratLimbFactory("./ratLimbDownLeft.png", "ratLimbDownLeft"));
 
 //_______________________________ CONSTANTES 
-rabbitWrapper.speed = 6; // px / 32ms
+ratWrapper.speed = 6; // px / 32ms
 
 //_______________________________ Style 
-rabbitWrapper.style.position = "absolute";
-rabbitWrapper.style.zIndex = "3";
-rabbitWrapper.height = 60; // placeholder
-rabbitWrapper.width = 141; // placeholder
-rabbitWrapper.style.height = rabbitWrapper.height + 'px';
-rabbitWrapper.style.width = rabbitWrapper.width + 'px';
+ratWrapper.style.position = "absolute";
+ratWrapper.style.zIndex = "3";
+ratWrapper.height = 60; // placeholder
+ratWrapper.width = 141; // placeholder
+ratWrapper.style.height = ratWrapper.height + 'px';
+ratWrapper.style.width = ratWrapper.width + 'px';
 
 //_______________________________ Position
-rabbitWrapper.area = rabbitWrapper.height * rabbitWrapper.width;
+ratWrapper.area = ratWrapper.height * ratWrapper.width;
 //position at topLeft of sprite
-rabbitWrapper.posY = 500;
-rabbitWrapper.posX = 500;
-rabbitWrapper.vel = 0; // in px / 32ms
-rabbitWrapper.setNewCoord = function() {
-    this.posY += rabbitWrapper.orientation[1] * this.vel;
-    this.posX += rabbitWrapper.orientation[0] * this.vel;
+ratWrapper.posY = 500;
+ratWrapper.posX = 500;
+ratWrapper.vel = 0; // in px / 32ms
+ratWrapper.setNewCoord = function() {
+    this.posY += ratWrapper.orientation[1] * this.vel;
+    this.posX += ratWrapper.orientation[0] * this.vel;
 }
-rabbitWrapper.updatePosition = function() {
+ratWrapper.updatePosition = function() {
     this.setNewCoord();
     this.style.left = this.posX + 'px';
     this.style.top = this.posY + 'px';
 }
 
 //_______________________________ Handles oriention
-rabbitWrapper.numOfDirections = 8;
-rabbitWrapper.orientation = 0;
-rabbitWrapper.orientationsIndex = 0;
+ratWrapper.numOfDirections = 8;
+ratWrapper.orientation = 0;
+ratWrapper.orientationsIndex = 0;
 // [[x, y],...] 16 directions starting at 0,1 (up) going clockwise
-rabbitWrapper.orientationsArray = [];
-rabbitWrapper.angleIncrement = 3600 / rabbitWrapper.numOfDirections;
-for (let i = 0; i < (3600 / rabbitWrapper.angleIncrement); i++) {
-    const angle = i * (rabbitWrapper.angleIncrement/10) * (Math.PI/180);
-    rabbitWrapper.orientationsArray.push([Math.cos(angle), Math.sin(angle)]);
+ratWrapper.orientationsArray = [];
+ratWrapper.angleIncrement = 3600 / ratWrapper.numOfDirections;
+for (let i = 0; i < (3600 / ratWrapper.angleIncrement); i++) {
+    const angle = i * (ratWrapper.angleIncrement/10) * (Math.PI/180);
+    ratWrapper.orientationsArray.push([Math.cos(angle), Math.sin(angle)]);
 }
-rabbitWrapper.orientation = rabbitWrapper.orientationsArray[rabbitWrapper.orientationsIndex];
-rabbitWrapper.setOrientation = function() {
+ratWrapper.orientation = ratWrapper.orientationsArray[ratWrapper.orientationsIndex];
+ratWrapper.setOrientation = function() {
     this.orientation = this.orientationsArray[this.orientationsIndex];
 }
-// turns the rabbitWrapper (val * angleIncrement/10 degrees)
-rabbitWrapper.changeOrientation = function(newIndex) {
+// turns the ratWrapper (val * angleIncrement/10 degrees)
+ratWrapper.changeOrientation = function(newIndex) {
     this.orientationsIndex = newIndex;
     this.setOrientation();
     this.setSpriteOrientation(newIndex);
@@ -65,9 +65,9 @@ rabbitWrapper.changeOrientation = function(newIndex) {
 
 
 //_______________________________ Handles hitbox
-rabbitWrapper.updateHitbox = function () {
-    const middleX = this.posX + rabbitWrapper.width / 2; 
-    const middleY = this.posY + rabbitWrapper.height / 2;
+ratWrapper.updateHitbox = function () {
+    const middleX = this.posX + ratWrapper.width / 2; 
+    const middleY = this.posY + ratWrapper.height / 2;
 
     let resultIndex;
     const nextOrientationIndex = (this.orientationsIndex + this.numOfDirections/4);
@@ -78,7 +78,7 @@ rabbitWrapper.updateHitbox = function () {
     } else {resultIndex = nextOrientationIndex;}
     const perpDirection = this.orientationsArray[resultIndex];
     //[topLeft, topRight, bottomRight, bottomLeft]
-    rabbitWrapper.hitboxPoints = 
+    ratWrapper.hitboxPoints = 
                         [[middleX - this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2),
                         middleY - this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)], 
                         [middleX + this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2),
@@ -93,16 +93,16 @@ rabbitWrapper.updateHitbox = function () {
         this.hitboxSegments.push([this.hitboxPoints[i - 1], this.hitboxPoints[i]]);
     }
 }
-rabbitWrapper.hitboxSegments = [];
-rabbitWrapper.updateHitbox();
+ratWrapper.hitboxSegments = [];
+ratWrapper.updateHitbox();
 
 //___________________________________________ handlesAnimation 
-rabbitWrapper.setSpriteOrientation = function(val) {
+ratWrapper.setSpriteOrientation = function(val) {
     this.style.transform = `rotate(${this.orientationsIndex*Math.round(360/this.numOfDirections)}deg)`;
 }
 
 //___________________________________________ inputHandling
-rabbitWrapper.stopsOnDirectionRelease = function (keyPressed) {
+ratWrapper.stopsOnDirectionRelease = function (keyPressed) {
     let directionPressed = false;
     for (const key of Object.keys(keyPressed)) {
         if (keyPressed[key] === true && parseInt(key) > -1) {
@@ -114,8 +114,8 @@ rabbitWrapper.stopsOnDirectionRelease = function (keyPressed) {
 }
 
 //used to keep tracks of the last inputted key
-rabbitWrapper.keyList = [];
-rabbitWrapper.updateInputKeyList = function (keyPressed) {
+ratWrapper.keyList = [];
+ratWrapper.updateInputKeyList = function (keyPressed) {
     for (const key of Object.keys(keyPressed)) {
         parseInt(key) && !keyPressed[key] && this.keyList.includes(key)? this.keyList.splice(this.keyList.indexOf(key), 1) : '';
     }
@@ -124,49 +124,49 @@ rabbitWrapper.updateInputKeyList = function (keyPressed) {
     }
 }
 
-rabbitWrapper.keydownHandler = function() {
-    rabbitWrapper.updateInputKeyList(keyPressed);
+ratWrapper.keydownHandler = function() {
+    ratWrapper.updateInputKeyList(keyPressed);
     switch (this.keyList[0]) {
         case '1' :
-            this.vel = rabbitWrapper.speed;
-            rabbitWrapper.changeOrientation(3);
+            this.vel = ratWrapper.speed;
+            ratWrapper.changeOrientation(3);
             break;
         case '2' :
-            this.vel = rabbitWrapper.speed;
-            rabbitWrapper.changeOrientation(2);
+            this.vel = ratWrapper.speed;
+            ratWrapper.changeOrientation(2);
             break;
         case '3' :
-            this.vel = rabbitWrapper.speed;
-            rabbitWrapper.changeOrientation(1);
+            this.vel = ratWrapper.speed;
+            ratWrapper.changeOrientation(1);
             break;
         case '4' :
-            this.vel = rabbitWrapper.speed;
-            rabbitWrapper.changeOrientation(4);
+            this.vel = ratWrapper.speed;
+            ratWrapper.changeOrientation(4);
             break;
         case '5' :
             break;
         case '6' :
-            this.vel = rabbitWrapper.speed;
-            rabbitWrapper.changeOrientation(0);
+            this.vel = ratWrapper.speed;
+            ratWrapper.changeOrientation(0);
             break;
         case '7' :
-            this.vel = rabbitWrapper.speed;
-            rabbitWrapper.changeOrientation(5);
+            this.vel = ratWrapper.speed;
+            ratWrapper.changeOrientation(5);
             break;
         case '8' :
-            this.vel = rabbitWrapper.speed;
-            rabbitWrapper.changeOrientation(6);
+            this.vel = ratWrapper.speed;
+            ratWrapper.changeOrientation(6);
             break;
         case '9' :
-            this.vel = rabbitWrapper.speed;
-            rabbitWrapper.changeOrientation(7);
+            this.vel = ratWrapper.speed;
+            ratWrapper.changeOrientation(7);
             break;
         case 'd' : 
             //DEBUG !!!
-            //rabbitWrapper.printHitbox();
+            //ratWrapper.printHitbox();
             this.vel = 0;
             break;
     }
 }
 
-export default rabbitWrapper;
+export default ratWrapper;

@@ -1,12 +1,12 @@
 import carWrapper from "./carComponent/carWrapper.mjs";
-import rabbitWrapper from "./rabbitComponent/rabbitWrapper.mjs";
+import ratWrapper from "./ratComponent/ratWrapper.mjs";
 
 
 import collisionChecker from "./utils/collisionChecker.mjs";
 // import testPoints from "./utils/debugWorld.mjs";
 //Game Logic
 document.body.appendChild(carWrapper);
-document.body.appendChild(rabbitWrapper);
+document.body.appendChild(ratWrapper);
 
 
 console.log(document.getElementsByTagName("lapin"));
@@ -25,17 +25,17 @@ document.addEventListener('keyup', () => {
 setInterval( () => {
     carWrapper.updatePosition();
     carWrapper.updateHitbox();
-    for (const point of rabbitWrapper.hitboxPoints) {
+    for (const point of ratWrapper.hitboxPoints) {
         if (collisionChecker(carWrapper, point)) {
-            rabbitWrapper.vel = 0;
-            rabbitWrapper.firstChild.style.backgroundColor = 'red';
-            console.log("COLLISION with rabbit at : ", point);
+            ratWrapper.vel = 0;
+            ratWrapper.firstChild.style.backgroundColor = 'red';
+            console.log("COLLISION with rat at : ", point);
         }
     }
-    rabbitWrapper.keydownHandler(keyPressed);   
-    rabbitWrapper.stopsOnDirectionRelease(keyPressed);
-    rabbitWrapper.updatePosition();
-    rabbitWrapper.updateHitbox();
+    ratWrapper.keydownHandler(keyPressed);   
+    ratWrapper.stopsOnDirectionRelease(keyPressed);
+    ratWrapper.updatePosition();
+    ratWrapper.updateHitbox();
 }, 16)
 
 setInterval( () => {
