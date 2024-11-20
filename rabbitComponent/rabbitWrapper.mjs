@@ -14,8 +14,8 @@ rabbitWrapper.speed = 7; // px / 32ms
 //_______________________________ Style 
 rabbitWrapper.style.position = "absolute";
 rabbitWrapper.style.zIndex = "3";
-rabbitWrapper.height = 40; // placeholder
-rabbitWrapper.width = 40; // placeholder
+rabbitWrapper.height = 50; // placeholder
+rabbitWrapper.width = 60; // placeholder
 rabbitWrapper.style.height = rabbitWrapper.height + 'px';
 rabbitWrapper.style.width = rabbitWrapper.width + 'px';
 
@@ -54,7 +54,7 @@ rabbitWrapper.setOrientation = function() {
 rabbitWrapper.changeOrientation = function(newIndex) {
     this.orientationsIndex = newIndex;
     this.setOrientation();
-    //this.setSpriteOrientation(nextOrientationIndex);
+    this.setSpriteOrientation(newIndex);
 }
 
 console.log(rabbitWrapper.orientationsArray);
@@ -91,6 +91,11 @@ rabbitWrapper.updateHitbox = function () {
 rabbitWrapper.hitboxSegments = [];
 rabbitWrapper.updateHitbox();
 
+//___________________________________________ handlesAnimation 
+rabbitWrapper.setSpriteOrientation = function(val) {
+    this.style.transform = `rotate(${this.orientationsIndex*Math.round(360/this.numOfDirections)}deg)`;
+}
+
 //___________________________________________ inputHandling
 rabbitWrapper.stopsOnDirectionRelease = function (keyPressed) {
     let directionPressed = false;
@@ -100,7 +105,7 @@ rabbitWrapper.stopsOnDirectionRelease = function (keyPressed) {
             break;
         }
     }
-    if (!directionPressed) {this.vel = 0;} 
+    if (!directionPressed) {this.vel = 0} 
 }
 
 rabbitWrapper.keydownHandler = function(keyPressed) {
@@ -132,17 +137,14 @@ rabbitWrapper.keydownHandler = function(keyPressed) {
             case '7' :
                 this.vel = rabbitWrapper.speed;
                 rabbitWrapper.changeOrientation(5);
-                console.log(rabbitWrapper.orientationsArray[this.orientationsIndex]);
                 break;
             case '8' :
                 this.vel = rabbitWrapper.speed;
                 rabbitWrapper.changeOrientation(6);
-                console.log(rabbitWrapper.orientationsArray[this.orientationsIndex]);
                 break;
             case '9' :
                 this.vel = rabbitWrapper.speed;
                 rabbitWrapper.changeOrientation(7);
-                console.log(rabbitWrapper.orientationsArray[this.orientationsIndex]);
                 break;
             case 'd' : 
                 //DEBUG !!!

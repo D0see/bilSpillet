@@ -3,7 +3,7 @@ import rabbitWrapper from "./rabbitComponent/rabbitWrapper.mjs";
 
 
 import collisionChecker from "./utils/collisionChecker.mjs";
-import testPoints from "./utils/debugWorld.mjs";
+// import testPoints from "./utils/debugWorld.mjs";
 //Game Logic
 document.body.appendChild(carWrapper);
 document.body.appendChild(rabbitWrapper);
@@ -30,11 +30,8 @@ setInterval( () => {
             console.log("COLLISION with rabbit at : ", point);
         }
     }
-    for (const point of testPoints) {
-        if (collisionChecker(carWrapper, point)) {
-            console.log("COLLISION with point at : ", point);
-        }
-    }
+    rabbitWrapper.keydownHandler(keyPressed);
+    rabbitWrapper.stopsOnDirectionRelease(keyPressed);
     rabbitWrapper.updatePosition();
     rabbitWrapper.updateHitbox();
 }, 16)
@@ -42,8 +39,5 @@ setInterval( () => {
 setInterval( () => {
     carWrapper.keydownHandler(keyPressed);
     carWrapper.animationsHandler();
-    
-    rabbitWrapper.keydownHandler(keyPressed);
-    rabbitWrapper.stopsOnDirectionRelease(keyPressed);
 }, 80)
 

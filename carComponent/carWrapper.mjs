@@ -114,7 +114,7 @@ carWrapper.hitboxSegments = [];
 carWrapper.updateHitbox();
 
 
-//DEBUG !!!
+// DEBUG !!!
 carWrapper.printHitbox = function() {
     for (const point of this.hitboxPoints) {
         debugPointFactory(point[0], point[1], 'red');
@@ -125,7 +125,7 @@ carWrapper.printHitbox = function() {
 
 
 //_______________________________ handles animations
-carWrapper.setSpriteOrientation = function(val) {
+carWrapper.setSpriteOrientation = function() {
     carWrapper.style.transform = `rotate(${this.orientationsIndex*Math.round(360/carWrapper.numOfDirections)}deg)`;
 }
     //handles puff of smoke

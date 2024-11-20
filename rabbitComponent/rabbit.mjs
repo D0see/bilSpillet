@@ -3,8 +3,8 @@ rabbit.id = "rabbit";
 
 //Style
 rabbit.style.position = "relative";
-rabbit.height = 40; //placeholder
-rabbit.width = 40; //placeholder
+rabbit.height = 50; //placeholder
+rabbit.width = 60; //placeholder
 rabbit.style.height = rabbit.height + 'px';
 rabbit.style.width = rabbit.width + 'px';
 rabbit.style.zIndex = "1";
@@ -13,6 +13,6 @@ rabbit.style.zIndex = "1";
 rabbit.style.backgroundImage = '';
 
 //placeholder
-rabbit.style.backgroundColor = "blue";
+rabbit.style.backgroundImage = 'url(rabbitComponent/rabbit.png)';
 
 export default rabbit;
