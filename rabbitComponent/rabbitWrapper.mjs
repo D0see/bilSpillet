@@ -9,7 +9,7 @@ document.body.appendChild(rabbitWrapper);
 rabbitWrapper.appendChild(rabbit);
 
 //_______________________________ CONSTANTES 
-rabbitWrapper.speed = 8; // px / 32ms
+rabbitWrapper.speed = 7; // px / 32ms
 
 //_______________________________ Style 
 rabbitWrapper.style.position = "absolute";
@@ -92,6 +92,17 @@ rabbitWrapper.hitboxSegments = [];
 rabbitWrapper.updateHitbox();
 
 //___________________________________________ inputHandling
+rabbitWrapper.stopsOnDirectionRelease = function (keyPressed) {
+    let directionPressed = false;
+    for (const key of Object.keys(keyPressed)) {
+        if (keyPressed[key] === true && parseInt(key) > -1) {
+            directionPressed = true;
+            break;
+        }
+    }
+    if (!directionPressed) {this.vel = 0;} 
+}
+
 rabbitWrapper.keydownHandler = function(keyPressed) {
     for (const key of Object.keys(keyPressed)) {
         if (!keyPressed[key]) {continue;}

@@ -44,5 +44,6 @@ setInterval( () => {
     carWrapper.animationsHandler();
     
     rabbitWrapper.keydownHandler(keyPressed);
+    rabbitWrapper.stopsOnDirectionRelease(keyPressed);
 }, 80)
 
