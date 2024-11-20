@@ -32,8 +32,7 @@ setInterval( () => {
             console.log("COLLISION with rabbit at : ", point);
         }
     }
-    rabbitWrapper.keydownHandler(keyPressed);
-    rabbitWrapper.updateInputKeyList(keyPressed)
+    rabbitWrapper.keydownHandler(keyPressed);   
     rabbitWrapper.stopsOnDirectionRelease(keyPressed);
     rabbitWrapper.updatePosition();
     rabbitWrapper.updateHitbox();

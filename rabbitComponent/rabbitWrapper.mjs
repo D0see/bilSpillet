@@ -2,11 +2,17 @@ import {keyPressed} from "../main.mjs";
 
 import rabbit from "./rabbit.mjs";
 
+import ratLimbFactory from "./ratLimbFactory.mjs";
 
 const rabbitWrapper = document.createElement('div');
 rabbitWrapper.id = 'rabbitWrapper';
 document.body.appendChild(rabbitWrapper);
 rabbitWrapper.appendChild(rabbit);
+const ratLimbUpLeft = ratLimbFactory("./ratLimbUpLeft.png", "ratLimbUpLeft")
+rabbitWrapper.appendChild(ratLimbUpLeft);
+rabbitWrapper.appendChild(ratLimbFactory("./ratLimbUpRight.png", "ratLimbUpRight"));
+rabbitWrapper.appendChild(ratLimbFactory("./ratLimbDownRight.png", "ratLimbDownRight"));
+rabbitWrapper.appendChild(ratLimbFactory("./ratLimbDownLeft.png", "ratLimbDownLeft"));
 
 //_______________________________ CONSTANTES 
 rabbitWrapper.speed = 6; // px / 32ms
@@ -14,8 +20,8 @@ rabbitWrapper.speed = 6; // px / 32ms
 //_______________________________ Style 
 rabbitWrapper.style.position = "absolute";
 rabbitWrapper.style.zIndex = "3";
-rabbitWrapper.height = 50; // placeholder
-rabbitWrapper.width = 60; // placeholder
+rabbitWrapper.height = 60; // placeholder
+rabbitWrapper.width = 141; // placeholder
 rabbitWrapper.style.height = rabbitWrapper.height + 'px';
 rabbitWrapper.style.width = rabbitWrapper.width + 'px';
 
@@ -57,7 +63,6 @@ rabbitWrapper.changeOrientation = function(newIndex) {
     this.setSpriteOrientation(newIndex);
 }
 
-console.log(rabbitWrapper.orientationsArray);
 
 //_______________________________ Handles hitbox
 rabbitWrapper.updateHitbox = function () {
@@ -108,7 +113,7 @@ rabbitWrapper.stopsOnDirectionRelease = function (keyPressed) {
     if (!directionPressed) {this.vel = 0} 
 }
 
-//used to keep tracks of the last inputtedKey
+//used to keep tracks of the last inputted key
 rabbitWrapper.keyList = [];
 rabbitWrapper.updateInputKeyList = function (keyPressed) {
     for (const key of Object.keys(keyPressed)) {
@@ -117,10 +122,10 @@ rabbitWrapper.updateInputKeyList = function (keyPressed) {
     for (const key of Object.keys(keyPressed)) {
         parseInt(key) && keyPressed[key] && !this.keyList.includes(key)? this.keyList.unshift(key) : '';
     }
-    console.log(this.keyList);
 }
 
 rabbitWrapper.keydownHandler = function() {
+    rabbitWrapper.updateInputKeyList(keyPressed);
     switch (this.keyList[0]) {
         case '1' :
             this.vel = rabbitWrapper.speed;

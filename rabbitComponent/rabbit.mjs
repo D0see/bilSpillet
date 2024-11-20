@@ -3,16 +3,16 @@ rabbit.id = "rabbit";
 
 //Style
 rabbit.style.position = "relative";
-rabbit.height = 50; //placeholder
-rabbit.width = 60; //placeholder
+rabbit.height = 60; //placeholder
+rabbit.width = 141; //placeholder
 rabbit.style.height = rabbit.height + 'px';
 rabbit.style.width = rabbit.width + 'px';
-rabbit.style.zIndex = "1";
+rabbit.style.zIndex = "2";
 
 //Sprite
 rabbit.style.backgroundImage = '';
 
 //placeholder
-rabbit.style.backgroundImage = 'url(rabbitComponent/rabbit.png)';
+rabbit.style.backgroundImage = 'url(rabbitComponent/ratbody.png)';
 
 export default rabbit;
