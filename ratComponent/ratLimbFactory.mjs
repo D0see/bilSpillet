@@ -7,7 +7,8 @@ const ratLimbFactory = (src, id) => {
     ratLimb.style.position = "absolute";
     ratLimb.style.height = ratLimb.height + 'px';
     ratLimb.style.width = ratLimb.width + 'px';
-    ratLimb.style.bottom = "0px"
+    ratLimb.style.bottom = "0px";
+    ratLimb.style.right = "5px"
 
     ratLimb.style.zIndex = "1";
 

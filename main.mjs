@@ -36,6 +36,7 @@ setInterval( () => {
     ratWrapper.stopsOnDirectionRelease(keyPressed);
     ratWrapper.updatePosition();
     ratWrapper.updateHitbox();
+    ratWrapper.animationsHandler();
 }, 16)
 
 setInterval( () => {

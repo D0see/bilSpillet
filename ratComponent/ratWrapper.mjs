@@ -8,14 +8,15 @@ const ratWrapper = document.createElement('div');
 ratWrapper.id = 'ratWrapper';
 document.body.appendChild(ratWrapper);
 ratWrapper.appendChild(rat);
-const ratLimbUpLeft = ratLimbFactory("./ratLimbUpLeft.png", "ratLimbUpLeft")
-ratWrapper.appendChild(ratLimbUpLeft);
-ratWrapper.appendChild(ratLimbFactory("./ratLimbUpRight.png", "ratLimbUpRight"));
-ratWrapper.appendChild(ratLimbFactory("./ratLimbDownRight.png", "ratLimbDownRight"));
-ratWrapper.appendChild(ratLimbFactory("./ratLimbDownLeft.png", "ratLimbDownLeft"));
+const ratLimbUpLeft = ratLimbFactory("./ratLimbUpLeft.png", "ratLimbUpLeft");
+const ratLimbUpRight = ratLimbFactory("./ratLimbUpRight.png", "ratLimbUpRight");
+const ratLimbDownRight = ratLimbFactory("./ratLimbDownRight.png", "ratLimbDownRight");
+const ratLimbDownLeft = ratLimbFactory("./ratLimbDownLeft.png", "ratLimbDownLeft");
+ratWrapper.limbs = [ratLimbUpLeft, ratLimbUpRight, ratLimbDownRight, ratLimbDownLeft];
+for (const limb of ratWrapper.limbs) {ratWrapper.appendChild(limb);}
 
 //_______________________________ CONSTANTES 
-ratWrapper.speed = 6; // px / 32ms
+ratWrapper.speed = 7; // px / 32ms
 
 //_______________________________ Style 
 ratWrapper.style.position = "absolute";
@@ -79,14 +80,17 @@ ratWrapper.updateHitbox = function () {
     const perpDirection = this.orientationsArray[resultIndex];
     //[topLeft, topRight, bottomRight, bottomLeft]
     ratWrapper.hitboxPoints = 
-                        [[middleX - this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2),
-                        middleY - this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)], 
+                        [[middleX, middleY + perpDirection[1] *(this.height / 2)], // MIDDLE TOP
+                        [middleX, middleY], // MIDDLE
+                        [middleX, middleY - perpDirection[1] *(this.height / 2)], //MIDDLE BOTTOM
+                        [middleX - this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2), 
+                        middleY - this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)], //TOP LEFT
                         [middleX + this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2),
-                        middleY + this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)],
+                        middleY + this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)], //TOP RIGHT
                         [middleX + this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
-                        middleY + this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)],
+                        middleY + this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)], //BOTTOM RIGHT
                         [middleX - this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
-                        middleY - this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)]];
+                        middleY - this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)]]; //BOTTOM LEFT
 
     this.hitboxSegments = [[this.hitboxPoints[0], this.hitboxPoints[this.hitboxPoints.length - 1]]];
     for (let i = 1; i < this.hitboxPoints.length; i++) {
@@ -99,6 +103,22 @@ ratWrapper.updateHitbox();
 //___________________________________________ handlesAnimation 
 ratWrapper.setSpriteOrientation = function(val) {
     this.style.transform = `rotate(${this.orientationsIndex*Math.round(360/this.numOfDirections)}deg)`;
+}
+
+ratWrapper.limbsWiggleHandler = function() {
+    if (this.vel > 0) {
+        for (const limb of ratWrapper.limbs) {
+            limb.style.animation = 'ratLimbWiggle 0.20s infinite'
+        }
+    } else {
+        for (const limb of ratWrapper.limbs) {
+            limb.style.animation = '';
+        }
+    }
+}
+
+ratWrapper.animationsHandler = function() {
+    ratWrapper.limbsWiggleHandler();
 }
 
 //___________________________________________ inputHandling
