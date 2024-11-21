@@ -21,22 +21,32 @@ document.addEventListener('keyup', () => {
     keyPressed[event.key] = false;
 })
 
-//Updates
-setInterval( () => {
-    carWrapper.updatePosition();
-    carWrapper.updateHitbox();
+const collisionsHandler = () => {
     for (const point of ratWrapper.hitboxPoints) {
         if (collisionChecker(carWrapper, point)) {
-            ratWrapper.vel = 0;
-            ratWrapper.firstChild.style.backgroundColor = 'red';
-            console.log("COLLISION with rat at : ", point);
+            ratWrapper.isAlive = false;
+            ratWrapper.speed = 0;
+            document.getElementById("rat").style.backgroundImage = ("url(./ratComponent/deadRat.png");
+            for (const limb of ratWrapper.limbs) {
+                limb.hidden = "true";
+            }
         }
     }
+}
+
+//Updates
+setInterval( () => {
+
+    carWrapper.updatePosition();
+    carWrapper.updateHitbox();
+
     ratWrapper.keydownHandler(keyPressed);   
     ratWrapper.stopsOnDirectionRelease(keyPressed);
     ratWrapper.updatePosition();
     ratWrapper.updateHitbox();
     ratWrapper.animationsHandler();
+
+    collisionsHandler();
 }, 16)
 
 setInterval( () => {

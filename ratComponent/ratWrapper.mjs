@@ -15,8 +15,11 @@ const ratLimbDownLeft = ratLimbFactory("./ratLimbDownLeft.png", "ratLimbDownLeft
 ratWrapper.limbs = [ratLimbUpLeft, ratLimbUpRight, ratLimbDownRight, ratLimbDownLeft];
 for (const limb of ratWrapper.limbs) {ratWrapper.appendChild(limb);}
 
-//_______________________________ CONSTANTES 
-ratWrapper.speed = 7; // px / 32ms
+//______________________________ States
+ratWrapper.isAlive = false;
+
+//_______________________________ Variables 
+ratWrapper.speed = 6; // px / 32ms
 
 //_______________________________ Style 
 ratWrapper.style.position = "absolute";
