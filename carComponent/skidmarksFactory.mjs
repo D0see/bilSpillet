@@ -6,7 +6,7 @@ const getRotation = (string) => {
 
 const skidmarkFactory = (posX, posY, rotation, orientationsIndex) => {
     const skidmark = document.createElement('div');
-    document.body.appendChild(skidmark);
+    document.getElementById("gameWindow").appendChild(skidmark);
 
     //Style
     skidmark.height = 94; //voiture.png height

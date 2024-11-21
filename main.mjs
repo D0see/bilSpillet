@@ -9,11 +9,6 @@ import collisionChecker from "./utils/collisionChecker.mjs";
 
 const clockSpeed = 16;
 
-const carUpdateLoop = () => {
-    carWrapper.keydownHandler(keyPressed);
-    carWrapper.animationsHandler();
-}
-const carClock = 80;
 
 
 
@@ -35,8 +30,8 @@ function gameLogic() {
         ratWrapper.keydownHandler(keyPressed);   
         ratWrapper.stopsOnDirectionRelease(keyPressed);
         ratWrapper.updatePosition();
-        ratWrapper.updateHitbox();
         ratWrapper.animationsHandler();
+        ratWrapper.updateHitbox();
 
         const collisionsHandler = () => {
             for (const point of ratWrapper.hitboxPoints) {
@@ -57,13 +52,20 @@ function gameLogic() {
         collisionsHandler();
     }
     const gameLoop = setInterval(mainUpdatesLoop, clockSpeed);
+
+    const carUpdateLoop = () => {
+        carWrapper.keydownHandler(keyPressed);
+        carWrapper.animationsHandler();
+    }
+    const carClock = 80;
     const carLoop = setInterval(carUpdateLoop, carClock);
 }
 
 const resetGame = () => {
     const mainElem = document.getElementById("gameWindow");
     const restartWindow = document.createElement("div");
-    restartWindow.innerText = 'RESTART THE GAME ???'
+    restartWindow.id = 'restartWindow';
+    restartWindow.innerText = 'RESTART'
     document.body.appendChild(restartWindow);
     console.log(mainElem.children);
     restartWindow.addEventListener("click", () => {

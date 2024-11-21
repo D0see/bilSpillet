@@ -1,5 +1,6 @@
 import {keyPressed} from "../utils/keyPressHandler.mjs";
 import ratFactory from "./ratFactory.mjs";
+import debugPointFactory from "../utils/debugPointFactory.mjs";
 
 import ratLimbFactory from "./ratLimbFactory.mjs";
 const ratWrapperFactory = () => {
@@ -83,17 +84,23 @@ const ratWrapperFactory = () => {
         const perpDirection = this.orientationsArray[resultIndex];
         //[topLeft, topRight, bottomRight, bottomLeft]
         ratWrapper.hitboxPoints = 
-                            [[middleX, middleY + perpDirection[1] *(this.height / 2)], // MIDDLE TOP
-                            [middleX, middleY], // MIDDLE
-                            [middleX, middleY - perpDirection[1] *(this.height / 2)], //MIDDLE BOTTOM
-                            [middleX - this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2), 
-                            middleY - this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)], //TOP LEFT
+                            [[middleX - perpDirection[0] *(this.height / 2), 
+                            middleY - this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)], //MIDDLE-LEFT TOP
+                            [middleX + perpDirection[0] *(this.height / 2), 
+                            middleY - this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)],//MIDDLE-LEFT BOTTOM
+                            [middleX - this.orientation[0] *(this.width / 4) - perpDirection[0] *(this.height / 2), 
+                            middleY - this.orientation[1] *(this.width / 4) - perpDirection[1] *(this.height / 2)], //MIDDLE-LEFT TOP
+                            [middleX - this.orientation[0] *(this.width / 4) + perpDirection[0] *(this.height / 2), 
+                            middleY - this.orientation[1] *(this.width / 4) + perpDirection[1] *(this.height / 2)],//MIDDLE-LEFT BOTTOM
+                            [middleX + this.orientation[0] *(this.width / 4) - perpDirection[0] *(this.height / 2), 
+                            middleY + this.orientation[1] *(this.width / 4) - perpDirection[1] *(this.height / 2)], //MIDDLE-RIGHT TOP
+                            [middleX + this.orientation[0] *(this.width / 4) + perpDirection[0] *(this.height / 2), 
+                            middleY + this.orientation[1] *(this.width / 4) + perpDirection[1] *(this.height / 2)], //MIDDLE-RIGHT BOTTOM
                             [middleX + this.orientation[0] *(this.width / 2) - perpDirection[0] *(this.height / 2),
                             middleY + this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)], //TOP RIGHT
                             [middleX + this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
-                            middleY + this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)], //BOTTOM RIGHT
-                            [middleX - this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
-                            middleY - this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)]]; //BOTTOM LEFT
+                            middleY + this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)]], //BOTTOM RIGHT
+                        
 
         this.hitboxSegments = [[this.hitboxPoints[0], this.hitboxPoints[this.hitboxPoints.length - 1]]];
         for (let i = 1; i < this.hitboxPoints.length; i++) {
@@ -102,6 +109,16 @@ const ratWrapperFactory = () => {
     }
     ratWrapper.hitboxSegments = [];
     ratWrapper.updateHitbox();
+
+    // DEBUG !!!
+    ratWrapper.printHitbox = function() {
+        for (const point of this.hitboxPoints) {
+            console.log(point)
+            debugPointFactory(point[0], point[1], 'red');
+        }
+        debugPointFactory(this.posX, this.posY, 'green ');
+        
+    }
 
     //___________________________________________ handlesAnimation 
     ratWrapper.setSpriteOrientation = function(val) {
@@ -175,6 +192,7 @@ const ratWrapperFactory = () => {
             case '6' :
                 this.vel = ratWrapper.speed;
                 ratWrapper.changeOrientation(0);
+                ratWrapper.printHitbox();
                 break;
             case '7' :
                 this.vel = ratWrapper.speed;
@@ -187,11 +205,6 @@ const ratWrapperFactory = () => {
             case '9' :
                 this.vel = ratWrapper.speed;
                 ratWrapper.changeOrientation(7);
-                break;
-            case 'd' : 
-                //DEBUG !!!
-                //ratWrapper.printHitbox();
-                this.vel = 0;
                 break;
         }
     }
