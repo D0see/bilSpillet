@@ -1,12 +1,12 @@
 import {keyPressed} from "../utils/keyPressHandler.mjs";
-
-import rat from "./rat.mjs";
+import ratFactory from "./ratFactory.mjs";
 
 import ratLimbFactory from "./ratLimbFactory.mjs";
 const ratWrapperFactory = () => {
     const ratWrapper = document.createElement('div');
     ratWrapper.id = 'ratWrapper';
     document.body.appendChild(ratWrapper);
+    const rat = ratFactory('url(ratComponent/ratbody.png)');
     ratWrapper.appendChild(rat);
     const ratLimbUpLeft = ratLimbFactory("./ratLimbUpLeft.png", "ratLimbUpLeft");
     const ratLimbUpRight = ratLimbFactory("./ratLimbUpRight.png", "ratLimbUpRight");
@@ -33,7 +33,7 @@ const ratWrapperFactory = () => {
     ratWrapper.area = ratWrapper.height * ratWrapper.width;
     //position at topLeft of sprite
     ratWrapper.posY = 500;
-    ratWrapper.posX = 500;
+    ratWrapper.posX = 1000;
     ratWrapper.vel = 0; // in px / 32ms
     ratWrapper.setNewCoord = function() {
         this.posY += ratWrapper.orientation[1] * this.vel;
@@ -122,6 +122,10 @@ const ratWrapperFactory = () => {
 
     ratWrapper.animationsHandler = function() {
         ratWrapper.limbsWiggleHandler();
+    }
+
+    ratWrapper.killTheRat = function() {
+        document.getElementById("rat").style.backgroundImage = ("url(./ratComponent/deadRat.png");
     }
 
     //___________________________________________ inputHandling
