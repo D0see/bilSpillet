@@ -113,7 +113,6 @@ const ratWrapperFactory = () => {
     // DEBUG !!!
     ratWrapper.printHitbox = function() {
         for (const point of this.hitboxPoints) {
-            console.log(point)
             debugPointFactory(point[0], point[1], 'red');
         }
         debugPointFactory(this.posX, this.posY, 'green ');
@@ -192,7 +191,6 @@ const ratWrapperFactory = () => {
             case '6' :
                 this.vel = ratWrapper.speed;
                 ratWrapper.changeOrientation(0);
-                ratWrapper.printHitbox();
                 break;
             case '7' :
                 this.vel = ratWrapper.speed;
@@ -205,7 +203,6 @@ const ratWrapperFactory = () => {
             case '9' :
                 this.vel = ratWrapper.speed;
                 ratWrapper.changeOrientation(7);
-                ratWrapper.printHitbox();
                 break;
         }
     }

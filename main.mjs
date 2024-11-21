@@ -66,10 +66,10 @@ function gameLogic() {
 }
 
 const resetGame = () => {
+    if (document.getElementById("restartWindow")) {return;}
     const mainElem = document.getElementById("gameWindow");
     const restartWindow = document.createElement("div");
     restartWindow.id = 'restartWindow';
-    restartWindow.classList.add = "restartWindow";
     restartWindow.innerText = 'Press forward to restart';
     document.body.appendChild(restartWindow);
     console.log(mainElem.children);
@@ -82,6 +82,8 @@ const resetGame = () => {
             }
             gameLogic();
         }
+
+        
     })
 }
 

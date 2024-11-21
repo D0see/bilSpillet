@@ -7,8 +7,7 @@ const collisionChecker = (obj, pointToCheck) => {
     obj.hitboxSegments.forEach(segment => {
         totalArea += calculateTriangleArea(pointToCheck, segment[0], segment[1]);
     })
-
-    return (totalArea === obj.area);  
+    return (Math.trunc(totalArea) === Math.trunc(obj.area));  
 }
 
 export default collisionChecker;
