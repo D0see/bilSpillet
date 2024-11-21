@@ -85,9 +85,9 @@ const ratWrapperFactory = () => {
         //[topLeft, topRight, bottomRight, bottomLeft]
         ratWrapper.hitboxPoints = 
                             [[middleX - perpDirection[0] *(this.height / 2), 
-                            middleY - perpDirection[1] *(this.height / 2)], //MIDDLE
+                            middleY - perpDirection[1] *(this.height / 2)], //MIDDLE - TOP
                             [middleX + perpDirection[0] *(this.height / 2), 
-                            middleY+ perpDirection[1] *(this.height / 2)], //MIDDLE
+                            middleY+ perpDirection[1] *(this.height / 2)], //MIDDLE - BOTTOM
                             [middleX - this.orientation[0] *(this.width / 4) - perpDirection[0] *(this.height / 2), 
                             middleY - this.orientation[1] *(this.width / 4) - perpDirection[1] *(this.height / 2)], //MIDDLE-LEFT TOP
                             [middleX - this.orientation[0] *(this.width / 4) + perpDirection[0] *(this.height / 2), 

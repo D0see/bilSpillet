@@ -13,6 +13,10 @@ const clockSpeed = 16;
 
 
 function gameLogic() {
+    const window = document.getElementById("restartWindow");
+    if (window) {window.remove();}
+
+
     const mainElem = document.getElementById("gameWindow");
     const ratWrapper = ratWrapperFactory();
     const carWrapper = carWrapperFactory();
@@ -65,14 +69,19 @@ const resetGame = () => {
     const mainElem = document.getElementById("gameWindow");
     const restartWindow = document.createElement("div");
     restartWindow.id = 'restartWindow';
-    restartWindow.innerText = 'RESTART'
+    restartWindow.classList.add = "restartWindow";
+    restartWindow.innerText = 'Press forward to restart';
     document.body.appendChild(restartWindow);
     console.log(mainElem.children);
-    restartWindow.addEventListener("click", () => {
-        for (const elem of [...mainElem.children]) {
-            elem.remove();
+    restartWindow.tabIndex = 0;
+    restartWindow.focus();
+    restartWindow.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowUp") {
+            for (const elem of [...mainElem.children]) {
+                elem.remove();
+            }
+            gameLogic();
         }
-        gameLogic();
     })
 }
 
