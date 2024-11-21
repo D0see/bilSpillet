@@ -85,9 +85,9 @@ const ratWrapperFactory = () => {
         //[topLeft, topRight, bottomRight, bottomLeft]
         ratWrapper.hitboxPoints = 
                             [[middleX - perpDirection[0] *(this.height / 2), 
-                            middleY - this.orientation[1] *(this.width / 2) - perpDirection[1] *(this.height / 2)], //MIDDLE-LEFT TOP
+                            middleY - perpDirection[1] *(this.height / 2)], //MIDDLE
                             [middleX + perpDirection[0] *(this.height / 2), 
-                            middleY - this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)],//MIDDLE-LEFT BOTTOM
+                            middleY+ perpDirection[1] *(this.height / 2)], //MIDDLE
                             [middleX - this.orientation[0] *(this.width / 4) - perpDirection[0] *(this.height / 2), 
                             middleY - this.orientation[1] *(this.width / 4) - perpDirection[1] *(this.height / 2)], //MIDDLE-LEFT TOP
                             [middleX - this.orientation[0] *(this.width / 4) + perpDirection[0] *(this.height / 2), 
@@ -205,6 +205,7 @@ const ratWrapperFactory = () => {
             case '9' :
                 this.vel = ratWrapper.speed;
                 ratWrapper.changeOrientation(7);
+                ratWrapper.printHitbox();
                 break;
         }
     }
