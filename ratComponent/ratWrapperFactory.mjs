@@ -6,7 +6,6 @@ import ratLimbFactory from "./ratLimbFactory.mjs";
 const ratWrapperFactory = () => {
     const ratWrapper = document.createElement('div');
     ratWrapper.id = 'ratWrapper';
-    document.body.appendChild(ratWrapper);
     const rat = ratFactory('url(ratComponent/ratbody.png)');
     ratWrapper.appendChild(rat);
     const ratLimbUpLeft = ratLimbFactory("./ratLimbUpLeft.png", "ratLimbUpLeft");
@@ -68,7 +67,6 @@ const ratWrapperFactory = () => {
         this.setSpriteOrientation(newIndex);
     }
 
-
     //_______________________________ Handles hitbox
     ratWrapper.updateHitbox = function () {
         const middleX = this.posX + ratWrapper.width / 2; 
@@ -101,7 +99,6 @@ const ratWrapperFactory = () => {
                             [middleX + this.orientation[0] *(this.width / 2) + perpDirection[0] *(this.height / 2),
                             middleY + this.orientation[1] *(this.width / 2) + perpDirection[1] *(this.height / 2)]], //BOTTOM RIGHT
                         
-
         this.hitboxSegments = [[this.hitboxPoints[0], this.hitboxPoints[this.hitboxPoints.length - 1]]];
         for (let i = 1; i < this.hitboxPoints.length; i++) {
             this.hitboxSegments.push([this.hitboxPoints[i - 1], this.hitboxPoints[i]]);
@@ -116,7 +113,6 @@ const ratWrapperFactory = () => {
             debugPointFactory(point[0], point[1], 'red');
         }
         debugPointFactory(this.posX, this.posY, 'green ');
-        
     }
 
     //___________________________________________ handlesAnimation 

@@ -7,15 +7,9 @@ import collisionChecker from "./utils/collisionChecker.mjs";
 
 //Game Logic
 
-const clockSpeed = 16;
-
-
-
-
 function gameLogic() {
     const window = document.getElementById("restartWindow");
     if (window) {window.remove();}
-
 
     const mainElem = document.getElementById("gameWindow");
     const ratWrapper = ratWrapperFactory();
@@ -55,6 +49,7 @@ function gameLogic() {
         }
         collisionsHandler();
     }
+    const clockSpeed = 16;
     const gameLoop = setInterval(mainUpdatesLoop, clockSpeed);
 
     const carUpdateLoop = () => {
@@ -82,8 +77,6 @@ const resetGame = () => {
             }
             gameLogic();
         }
-
-        
     })
 }
 

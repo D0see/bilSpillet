@@ -170,7 +170,7 @@ const carWrapperFactory = () => {
         //handles skidmarks 
     const skidMarks = [];
     carWrapper.skidMarkHandler = function () {
-        skidMarks.push(skidmarkFactory(this.posX, this.posY, this.style.transform, this.orientationsIndex));
+        skidMarks.push(skidmarkFactory(this.posX, this.posY, this.style.transform));
         // FIFO implementation
         if (skidMarks.length > MAXSKIDMARKS) { 
             skidMarks.shift().remove();

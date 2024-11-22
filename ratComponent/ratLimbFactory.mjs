@@ -9,7 +9,6 @@ const ratLimbFactory = (src, id) => {
     ratLimb.style.width = ratLimb.width + 'px';
     ratLimb.style.bottom = "0px";
     ratLimb.style.right = "5px"
-
     ratLimb.style.zIndex = "1";
 
     //Sprite

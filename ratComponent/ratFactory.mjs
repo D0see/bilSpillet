@@ -10,10 +10,7 @@ const ratFactory = (src) => {
     rat.style.width = rat.width + 'px';
     rat.style.zIndex = "2";
 
-    //Sprite
-    rat.style.backgroundImage = '';
-
-    //placeholder
+    //Sprte
     rat.style.backgroundImage = src;
     return rat;
 }

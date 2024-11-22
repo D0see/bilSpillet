@@ -4,7 +4,7 @@ const getRotation = (string) => {
     return string.slice(firstIndex + 1, lastIndex - 3);
 }
 
-const skidmarkFactory = (posX, posY, rotation, orientationsIndex) => {
+const skidmarkFactory = (posX, posY, rotation) => {
     const skidmark = document.createElement('div');
     document.getElementById("gameWindow").appendChild(skidmark);
 

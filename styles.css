@@ -4,7 +4,7 @@
 }
 
 #restartWindow {
-    position: absolute;
+    position: relative;
     text-align: center;
     top: 60vh;
     font-size: 50px;
