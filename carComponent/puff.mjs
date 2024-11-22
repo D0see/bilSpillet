@@ -8,7 +8,7 @@ puff.style.height = puff.height + "px";
 puff.style.width = puff.width + "px";
 puff.style.position = "relative";
 puff.style.right = "50px";
-puff.style.bottom = "45px";
+puff.style.bottom = "37px";
 
 puff.isHidden = true;
 

@@ -9,8 +9,8 @@ const skidmarkFactory = (posX, posY, rotation) => {
     document.getElementById("gameWindow").appendChild(skidmark);
 
     //Style
-    skidmark.height = 94; //voiture.png height
-    skidmark.width = 200; //voiture.png width 
+    skidmark.height = 79; //voiture.png height
+    skidmark.width = 194; //voiture.png width 
     skidmark.style.position = "absolute";
     skidmark.style.height = skidmark.height + 'px';
     skidmark.style.width = skidmark.width + 'px';

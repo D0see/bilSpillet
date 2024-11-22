@@ -3,8 +3,8 @@ car.id = "car";
 
 //Style
 car.style.position = "relative";
-car.height = 94; //voiture.png height
-car.width = 200; //voiture.png width
+car.height = 79; //voiture.png height
+car.width = 195; //voiture.png width
 car.style.height = car.height + 'px';
 car.style.width = car.width + 'px';
 car.style.zIndex = "1";

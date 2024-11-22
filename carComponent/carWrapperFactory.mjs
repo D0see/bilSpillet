@@ -22,8 +22,8 @@ const carWrapperFactory = () => {
     carWrapper.appendChild(rightHeadlight);
     const headLights = [leftHeadlight, rightHeadlight];
 
-    const leftSpark = driftSparkFactory(168 , false, 2);
-    const rightSpark = driftSparkFactory(105, true, 0);
+    const leftSpark = driftSparkFactory(160 , false, 2);
+    const rightSpark = driftSparkFactory(93, true, 0);
     carWrapper.appendChild(leftSpark);
     carWrapper.appendChild(rightSpark); 
     const driftSparks = [leftSpark, rightSpark];
@@ -35,8 +35,8 @@ const carWrapperFactory = () => {
     //_______________________________ Style 
     carWrapper.style.position = "absolute";
     carWrapper.style.zIndex = "10";
-    carWrapper.height = 94; //voiture.png height
-    carWrapper.width = 200; //voiture.png width
+    carWrapper.height = 79; //voiture.png height
+    carWrapper.width = 195; //voiture.png width
     carWrapper.style.height = carWrapper.height + 'px';
     carWrapper.style.width = carWrapper.width + 'px';
 
